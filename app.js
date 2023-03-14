@@ -7,7 +7,7 @@ function guardar(product) {
 }
 
 function obtenerPorId(id) {
-    manager.getProductById(id).then((result) => console.log(result));
+    manager.getProductById(id).then((result) => console.table(result));
 }
 
 function obtenerTodos() {

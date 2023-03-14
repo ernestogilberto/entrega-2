@@ -26,7 +26,8 @@ class ProductManager {
             }
             const productFound = products.find(p => p.code === product.code);
             if (productFound) {
-                return 'Product code already exists';
+                const code = productFound.code;
+                return `Product with code ${code} already exists`;
             }
         } catch (error) {
             return error;
@@ -35,7 +36,7 @@ class ProductManager {
     }
 
     addProduct = async (product) => {
-        const validationResult = await this.validateProduct(product).then(v => v);
+        const validationResult = await this.validateProduct(product).then(result => result);
         if (validationResult !== 'Success') {
             return validationResult;
         } else {
