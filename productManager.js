@@ -30,7 +30,7 @@ class ProductManager {
                 return `Product with code ${code} already exists`;
             }
         } catch (error) {
-            return error;
+            return `Product validation error: ${error}`
         }
         return 'Success';
     }
@@ -53,7 +53,7 @@ class ProductManager {
                 }
                 return 'Product added successfully';
             } catch (error) {
-                return error;
+                return `Product add error: ${error}`;
             }
         }
     }
@@ -82,7 +82,7 @@ class ProductManager {
                 return product ? product : 'Product not found';
             }
         } catch (error) {
-            return error;
+            return `Product get error: ${error}`;
         }
     }
 
@@ -108,7 +108,7 @@ class ProductManager {
                 return 'Product updated successfully';
             }
         } catch (error) {
-            return error;
+            return `Product update error: ${error}`
         }
     }
 
@@ -128,7 +128,7 @@ class ProductManager {
                 return 'Product deleted successfully';
             }
         } catch (error) {
-            return error;
+            return `Product delete error: ${error}`;
         }
     }
 
