@@ -3,23 +3,23 @@ const ProductManager = require('./productManager');
 const manager = new ProductManager('./products.json');
 
 function guardar(product) {
-    manager.addProduct(product).then((result) => console.log(result));
+    manager.addProduct(product).then((result) => console.log(result.payload));
 }
 
 function obtenerPorId(id) {
-    manager.getProductById(id).then((result) => console.table(result));
+    manager.getProductById(id).then((result) => console.table(result.payload));
 }
 
 function obtenerTodos() {
-    manager.getProducts().then((result) => console.table(result));
+    manager.getProducts().then((result) => console.table(result.payload));
 }
 
 function borrarPorId(id) {
-    manager.deleteById(id).then((result) => console.log(result));
+    manager.deleteById(id).then((result) => console.log(result.payload));
 }
 
 function actualizarPorId(id, info) {
-    manager.updateById(id, info).then((result) => console.log(result));
+    manager.updateById(id, info).then((result) => console.log(result.payload));
 }
 
 setTimeout(guardar, 50)
@@ -38,6 +38,16 @@ setTimeout(guardar, 150,{
     thumbnail: 'imagen1.jpg',
     code: '123456',
     stock: 10
+})
+
+setTimeout(guardar, 155,{
+    title: 'Producto 99',
+    description: 'Descripción del producto 1',
+    price: 100,
+    thumbnail: 'imagen1.jpg',
+    code: '1456',
+    stock: 10,
+    color: 'rojo'
 })
 
 setTimeout(guardar, 200, {
@@ -82,6 +92,7 @@ setTimeout(obtenerPorId, 600);
 setTimeout(obtenerPorId, 700,2);
 
 setTimeout(actualizarPorId, 800, 2, {title: 'Producto alterado', price: 111, id: 34});
+setTimeout(actualizarPorId, 810, 2, {title: 'Producto alterado', price: 111, color: 'rojo'});
 setTimeout(obtenerTodos, 825)
 setTimeout(actualizarPorId, 850, 2, {title: 'Producto cambiado', price: 999});
 
