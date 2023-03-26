@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Guitar",
+    "description": "Acoustic Guitar",
+    "price": 3500,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/1819/1819245.png",
+    "code": "SKU1926",
+    "stock": 17,
+    "id": 1
+  },
+  {
+    "title": "Bass",
+    "description": "Electric Bass",
+    "price": 4750,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/2741/2741297.png",
+    "code": "SKU1927",
+    "stock": 13,
+    "id": 2
+  },
+  {
+    "title": "Drums",
+    "description": "Drums Set",
+    "price": 5800,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/2884/2884318.png",
+    "code": "SKU1928",
+    "stock": 8,
+    "id": 3
+  },
+  {
+    "title": "Violin",
+    "description": "Acoustic Violin",
+    "price": 3450,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/625/625328.png",
+    "code": "SKU1929",
+    "stock": 24,
+    "id": 4
+  },
+  {
+    "title": "Saxophone",
+    "description": "Jazz Saxophone",
+    "price": 6780,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/625/625325.png",
+    "code": "SKU1930",
+    "stock": 8,
+    "id": 5
+  },
+  {
+    "title": "Piano",
+    "description": "Grand Piano",
+    "price": 25790,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/2823/2823230.png",
+    "code": "SKU1931",
+    "stock": 3,
+    "id": 6
+  }
+]

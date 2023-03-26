@@ -1,0 +1,22 @@
+{
+  "name": "entrega-backend",
+  "version": "1.0.0",
+  "description": "proyecto de mi curso de backend",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ernestogilberto/entrega-2.git"
+  },
+  "author": "Ernesto Gilberto Valenzuela Gallardo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ernestogilberto/entrega-2/issues"
+  },
+  "homepage": "https://github.com/ernestogilberto/entrega-2#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
