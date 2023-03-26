@@ -1,3 +1,4 @@
+const {validateProduct, setId, validateAllowedFields} = require('../helpers/dataHelpers');
 const fs = require('fs').promises;
 
 class ProductManager {
@@ -5,60 +6,17 @@ class ProductManager {
 
     constructor(path) {
         this.path = path;
-        this.nextId = 1;
-    }
-
-    async validateProduct(product) {
-
-        if (!product) {
-            return {status: 'failure', payload: 'Product is required'};
-        }
-
-        for (const field of this.requiredProductFields) {
-            const {[field]: value} = product;
-            if (!value) {
-                return {status: 'failure', payload: `Product ${field} is required`};
-            }
-        }
-
-        const productKeys = Object.keys(product);
-        for (const key of productKeys) {
-            if (!this.requiredProductFields.includes(key)) {
-                return {status: 'failure', payload: `Product property ${key} is not allowed`};
-            }
-        }
-
-        try {
-            const productsResult = await this.getProducts();
-            if (productsResult.status === 'failure') {
-                return {status: 'failure', payload: 'Error getting products'};
-            }
-
-            if (productsResult.status === '404') {
-                return {status: 'success', payload: []};
-            }
-
-            const products = productsResult.payload;
-            const productFound = products.find(p => p.code === product.code);
-
-            if (productFound) {
-                return {status: 'failure', payload: `Product with code ${product.code} already exists`};
-            }
-
-            return {status: 'success', payload: []};
-        } catch (error) {
-            return {status: 'failure', payload: `Product validation error: ${error.message}`};
-        }
     }
 
     async addProduct(product) {
 
-        const validationResult = await this.validateProduct(product);
+        const validationResult = validateProduct(product, this.requiredProductFields, await this.getProducts());
+
         if (validationResult.status === 'failure') {
             return {status: 'failure', payload: validationResult.payload};
         }
 
-        product.id = this.nextId++;
+        product.id = await setId(await this.getProducts());
 
         try {
             const productsResult = await this.getProducts();
@@ -70,7 +28,7 @@ class ProductManager {
             const products = productsResult.payload;
 
             products.push(product);
-            await fs.writeFile(this.path, JSON.stringify(products), null, 2);
+            await fs.writeFile(this.path, JSON.stringify(products));
             return {status: 'success', payload: `Product added successfully with id ${product.id}`};
 
         } catch (error) {
@@ -101,6 +59,7 @@ class ProductManager {
             if (productsResult.status === 'failure') {
                 return {status: 'failure', payload: 'Error getting products'};
             }
+
             const products = productsResult.payload;
             const product = products.find(product => product.id === id);
             return product ? {status: 'success', payload: product} : {status: 'failure', payload: 'Product not found'};
@@ -119,11 +78,10 @@ class ProductManager {
             return {status: 'failure', payload: 'Id cannot be updated'};
         }
 
-        const productKeys = Object.keys(data);
-        for (const key of productKeys) {
-            if (!this.requiredProductFields.includes(key)) {
-                return {status: 'failure', payload: `Product property ${key} is not allowed`};
-            }
+        const allowedFieldsResult = validateAllowedFields(data, this.requiredProductFields);
+
+        if (allowedFieldsResult.status === 'failure') {
+            return {status: 'failure', payload: allowedFieldsResult.payload};
         }
 
         try {
@@ -141,7 +99,7 @@ class ProductManager {
 
             const product = products[index];
             products[index] = {...product, ...data};
-            await fs.writeFile(this.path, JSON.stringify(products), null, 2);
+            await fs.writeFile(this.path, JSON.stringify(products));
             return {status: 'success', payload: 'Product updated successfully'};
 
 
@@ -169,14 +127,13 @@ class ProductManager {
 
             products.splice(index, 1)
 
-            await fs.writeFile(this.path, JSON.stringify(products), null, 2);
+            await fs.writeFile(this.path, JSON.stringify(products));
             return {status: 'success', payload: 'Product deleted successfully'};
 
         } catch (error) {
             return {status: 'failure', payload: `Product delete error: ${error.message}`};
         }
     }
-
 }
 
 module.exports = ProductManager;
