@@ -1,3 +1,4 @@
 /node_modules/
 /.idea/
 /src/db/productsBackup.json
+/src/db/cartsBackup.json

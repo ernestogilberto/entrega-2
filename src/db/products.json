@@ -6,7 +6,8 @@
     "thumbnail": "https://cdn-icons-png.flaticon.com/512/1819/1819245.png",
     "code": "SKU1926",
     "stock": 17,
-    "id": 1
+    "id": 1,
+    "status": true
   },
   {
     "title": "Bass",
@@ -15,7 +16,8 @@
     "thumbnail": "https://cdn-icons-png.flaticon.com/512/2741/2741297.png",
     "code": "SKU1927",
     "stock": 13,
-    "id": 2
+    "id": 2,
+    "status": true
   },
   {
     "title": "Drums",
@@ -24,7 +26,8 @@
     "thumbnail": "https://cdn-icons-png.flaticon.com/512/2884/2884318.png",
     "code": "SKU1928",
     "stock": 8,
-    "id": 3
+    "id": 3,
+    "status": true
   },
   {
     "title": "Violin",
@@ -33,7 +36,8 @@
     "thumbnail": "https://cdn-icons-png.flaticon.com/512/625/625328.png",
     "code": "SKU1929",
     "stock": 24,
-    "id": 4
+    "id": 4,
+    "status": true
   },
   {
     "title": "Saxophone",
@@ -42,7 +46,8 @@
     "thumbnail": "https://cdn-icons-png.flaticon.com/512/625/625325.png",
     "code": "SKU1930",
     "stock": 8,
-    "id": 5
+    "id": 5,
+    "status": true
   },
   {
     "title": "Piano",
@@ -50,7 +55,18 @@
     "price": 25790,
     "thumbnail": "https://cdn-icons-png.flaticon.com/512/2823/2823230.png",
     "code": "SKU1931",
-    "stock": 3,
-    "id": 6
+    "stock": 4,
+    "id": 6,
+    "status": true
+  },
+  {
+    "title": "Cello",
+    "description": "Acoustic Cello",
+    "price": 3450,
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/3166/3166716.png",
+    "code": "SKU1932",
+    "stock": 21,
+    "id": 7,
+    "status": true
   }
 ]

@@ -1,77 +1,67 @@
 // Function to set ID of a product
 const setId = (data) => {
-    try {
-        // If the status of the response is not 'success', set ID to 1
-        if (data.status !== 'success') {
-            return 1;
+        // If the data is empty, set ID to 1
+        if (data.length === 0){
+            return 1
         } else {
-            // Get the list of products from the response and set ID to last product's ID + 1
-            const products = data.payload;
-            const id = products[products.length - 1].id;
-            return id + 1;
+            // If the data is not empty, set ID to the last ID + 1
+            const id = data[data.length - 1].id
+            return id + 1
         }
-    } catch (error) {
-        return error;
-    }
-};
+}
 
 // Function to validate a product
-const validateProduct = (product, requiredProductFields, productsResult) =>{
+const validateProduct = (product, requiredProductFields, currentProducts) => {
+
     // Check if the product exists, if not, return error
     if (!product) {
-        return {status: 'failure', payload: 'Product is required'};
+        return {error: 'Product is required'}
+    }
+
+    if(product.id) {
+        return {error: 'Id cannot be created'}
     }
 
     // Check if all required fields of the product exist, if not, return error
     for (const field of requiredProductFields) {
-        const {[field]: value} = product;
+        const {[field]: value} = product
+        if(field === 'thumbnail') {
+            continue
+        }
         if (!value) {
-            return {status: 'failure', payload: `Product ${field} is required`};
+            return {error: `Product ${field} is required`}
         }
     }
 
-    // Check if any fields of the product are not allowed, if not, return error
-    const allowedFieldsResult = validateAllowedFields(product, requiredProductFields);
-    if (allowedFieldsResult.status === 'failure') {
-        return {status: 'failure', payload: allowedFieldsResult.payload};
+    // Check if all fields of the product are allowed, if not, return error
+    const {error: allowedFieldsResult} = validateAllowedFields(product, requiredProductFields)
+
+    if (allowedFieldsResult) {
+        return {error: allowedFieldsResult}
     }
 
-    try {
-        // If there is an error getting the products, return error
-        if (productsResult.status === 'failure') {
-            return {status: 'failure', payload: 'Error getting products'};
-        }
+    // Check if a product with the same code exists, if so, return error
+    const productFound = currentProducts.find(p => p.code === product.code)
 
-        // If there are no products, return an empty array
-        if (productsResult.status === '404') {
-            return {status: 'success', payload: []};
-        }
-
-        // Check if a product with the same code exists, if so, return error
-        const products = productsResult.payload;
-        const productFound = products.find(p => p.code === product.code);
-
-        if (productFound) {
-            return {status: 'failure', payload: `Product with code ${product.code} already exists`};
-        }
-
-        // If everything is successful, return a status of 'success'
-        return {status: 'success'};
-    } catch (error) {
-        return {status: 'failure', payload: `Product validation error: ${error.message}`};
+    if (productFound) {
+        return {error: `Product with code ${product.code} already exists`}
     }
+
+    // If everything is successful, return payload
+    return {payload: 'Product is valid'}
 }
 
 // Function to validate if all fields of a product are allowed
 const validateAllowedFields = (data, requiredProductFields) => {
-    const productKeys = Object.keys(data);
+    const productKeys = Object.keys(data)
+
+    // Check if any fields of the product are not allowed, if so, return error
     for (const key of productKeys) {
         if (!requiredProductFields.includes(key)) {
-            return {status: 'failure', payload: `Product property ${key} is not allowed`};
+            return {error: `Product property ${key} is not allowed`}
         }
     }
-    // If everything is successful, return a status of 'success'
-    return {status: 'success'};
+    return {payload: 'Product is valid'}
 }
 
-module.exports = { setId, validateProduct, validateAllowedFields };
+export {setId, validateProduct, validateAllowedFields}
