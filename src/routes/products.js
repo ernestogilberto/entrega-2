@@ -1,9 +1,13 @@
 import express from 'express';
 import {ProductManager} from '../managers/productManager.js'
+import path from 'path';
+import {fileURLToPath} from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(__dirname, '../');
 
-const manager = new ProductManager('./db/products.json');
+const manager = new ProductManager(root + 'db/products.json');
+
 const router = express.Router();
-
 
 router.get('/', async (req, res) => {
     try {
